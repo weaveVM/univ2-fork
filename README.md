@@ -14,15 +14,17 @@
    ```bash
    nvm install 14
    nvm use 14
-
+```
 2. Navigate to v2-sdk folder and build:
+```
 cd packages/interface/v2-sdk
 yarn build
-
-3. Navigate to interface folder and start the project:
+```
+4. Navigate to interface folder and start the project:
+```
 cd ../interface
 yarn start
-
+```
 ## Smart Contract
 1. cd packages/contracts
 forge install
