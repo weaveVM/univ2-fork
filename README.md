@@ -30,9 +30,10 @@ yarn start
 ```
 
 ## Smart Contract
-1. cd packages/contracts
+1. Navigate to Smart Contracts
 
 ```
+cd packages/contracts
 forge install
 forge test
 
