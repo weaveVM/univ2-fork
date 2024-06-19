@@ -25,7 +25,7 @@ contract UniswapV2FactoryTest is Test {
     ERC20Mintable token3;
 
     function setUp() public {
-        vm.createFork("https://testnet-rpc.wvm.dev");
+        vm.createFork("https://testnet.wvm.dev");
         
         // //Deploy UniswapV2Factory
         // deployCodeTo(
