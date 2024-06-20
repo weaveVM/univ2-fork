@@ -10,14 +10,14 @@ import {ERC20Mintable} from "test/mocks/ERC20Mintable.sol";
 import {WETH} from "solmate/tokens/WETH.sol";
 
 contract UniswapV2FactoryTest is Test {
-    IUniswapV2Factory public factory =
-        IUniswapV2Factory(0x769342223Dd222099A0bEBcbF8Edab64fD339E61);
+    IUniswapV2Factory public factory = //IUniswapV2Factory(0x769342223Dd222099A0bEBcbF8Edab64fD339E61);
+        IUniswapV2Factory(makeAddr("UniswapV2Factory"));
 
-    WETH public weth =
-        WETH(payable(0x40877681D53921DA8cF3c919B64aa8A56D2178aD));
+    WETH public weth;
+        //WETH(payable(0x40877681D53921DA8cF3c919B64aa8A56D2178aD));
 
-    IUniswapV2Router02 public router =
-        IUniswapV2Router02(0xffC15e84Ab6604fC0DC7edCC361C7653EB616211);
+    IUniswapV2Router02 public router = //IUniswapV2Router02(0xffC15e84Ab6604fC0DC7edCC361C7653EB616211);
+        IUniswapV2Router02(makeAddr("UniswapV2Router02"));
 
     ERC20Mintable token0;
     ERC20Mintable token1;
@@ -25,24 +25,24 @@ contract UniswapV2FactoryTest is Test {
     ERC20Mintable token3;
 
     function setUp() public {
-        vm.createFork("https://testnet-rpc.wvm.dev");
-        
-        // //Deploy UniswapV2Factory
-        // deployCodeTo(
-        //     "UniswapV2Factory.sol:UniswapV2Factory",
-        //     abi.encode(address(0x769342223dd222099a0bebcbf8edab64fd339e61)),
-        //     makeAddr("UniswapV2Factory")
-        // );
+        vm.createFork("https://testnet-rpc.wvm.dev"); // WVM RPC Endpoint
 
-        // //Deploy UniswapV2Router02
-        // deployCodeTo(
-        //     "UniswapV2Router02.sol:UniswapV2Router02",
-        //     abi.encode(
-        //         makeAddr("UniswapV2Factory"),
-        //         0xffc15e84ab6604fc0dc7edcc361c7653eb616211
-        //     ),
-        //     makeAddr("UniswapV2Router02")
-        // );
+        //Deploy UniswapV2Factory
+        deployCodeTo(
+            "UniswapV2Factory.sol:UniswapV2Factory",
+            abi.encode(address(0xfBE08A67bcFd05d62aE44C71A8266C5146C4Ab4b)),
+            makeAddr("UniswapV2Factory")
+        );
+
+        //Deploy UniswapV2Router02
+        deployCodeTo(
+            "UniswapV2Router02.sol:UniswapV2Router02",
+            abi.encode(
+                makeAddr("UniswapV2Factory"),
+                0xf531B8F309Be94191af87605CfBf600D71C2cFe0
+            ),
+            makeAddr("UniswapV2Router02")
+        );
 
         token0 = new ERC20Mintable("Token A", "TKNA");
         token1 = new ERC20Mintable("Token B", "TKNB");
@@ -54,14 +54,14 @@ contract UniswapV2FactoryTest is Test {
 
     function testCreatePair() public {
         address pairAddress = factory.createPair(
-            address(weth),
+            address(token1),
             address(token0)
         );
 
         IUniswapV2Pair pair = IUniswapV2Pair(pairAddress);
 
-        assertEq(pair.token0(), address(token0));
-        assertEq(pair.token1(), address(weth));
+        assertEq(pair.token0(), address(token1));
+        assertEq(pair.token1(), address(token0));
     }
 
     function testCreatePairZeroAddress() public {
