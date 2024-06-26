@@ -12,13 +12,12 @@ import {WETH} from "solmate/tokens/WETH.sol";
 contract UniswapV2FactoryTest is Test {
     IUniswapV2Factory public factory =
         IUniswapV2Factory(0x41edf1bdAA3EC70cD8E8a25f76b3F5a9A7284D9B);
-    // IUniswapV2Factory(makeAddr("UniswapV2Factory"));
 
-    WETH public weth;
-    //WETH(payable(0x40877681D53921DA8cF3c919B64aa8A56D2178aD));
+    WETH public weth =
+        WETH(payable(0xe9f5B7cEe12a17Ecfea636D7d628517bc1c4E472));
 
     IUniswapV2Router02 public router =
-        IUniswapV2Router02(0x725B24078d7c2861bf10294261B4c4de84cC6fce);
+        IUniswapV2Router02(0xBa97D423637b32A6E676a2696E79c2aE82Ce8569);
 
     ERC20Mintable token0 =
         ERC20Mintable(0x6F4b9c4D1d98D077DF40ECA9a52ad674ba89A466);
@@ -34,13 +33,13 @@ contract UniswapV2FactoryTest is Test {
     function testCreatePair() public {
         address pairAddress = factory.createPair(
             address(token1),
-            address(token0)
+            address(weth)
         );
 
         IUniswapV2Pair pair = IUniswapV2Pair(pairAddress);
 
-        assertEq(pair.token0(), address(token0));
-        assertEq(pair.token1(), address(token1));
+        assertEq(pair.token1(), address(weth));
+        assertEq(pair.token0(), address(token1));
     }
 
     function testCreatePairZeroAddress() public {

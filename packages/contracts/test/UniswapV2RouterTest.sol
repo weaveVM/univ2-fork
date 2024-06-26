@@ -9,14 +9,14 @@ import {IUniswapV2Pair} from "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pa
 import {ERC20Mintable} from "test/mocks/ERC20Mintable.sol";
 import {WETH} from "solmate/tokens/WETH.sol";
 
-contract UniswapV2FactoryTest is Test {
+contract UniswapV2RouterTest is Test {
     IUniswapV2Factory public factory =
         IUniswapV2Factory(0x41edf1bdAA3EC70cD8E8a25f76b3F5a9A7284D9B);
 
-    WETH public weth;
+    WETH public weth = WETH(payable(0xe9f5B7cEe12a17Ecfea636D7d628517bc1c4E472));
 
     IUniswapV2Router02 public router =
-        IUniswapV2Router02(0x725B24078d7c2861bf10294261B4c4de84cC6fce);
+        IUniswapV2Router02(0xBa97D423637b32A6E676a2696E79c2aE82Ce8569);
 
     ERC20Mintable tokenA =
         ERC20Mintable(0x6F4b9c4D1d98D077DF40ECA9a52ad674ba89A466);
