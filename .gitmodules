@@ -1,0 +1,3 @@
+[submodule "packages/interface/interface-2.6.4/erc20_upgradeable/lib/forge-std"]
+	path = packages/interface/interface-2.6.4/erc20_upgradeable/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
