@@ -20,7 +20,7 @@ export function isAddress(value: any): string | false {
 export function getEtherscanLink(chainId: ChainId, data: string, type: 'transaction' | 'token' | 'address'): string {
   // so the linter doesn't go nuts about an unused variable
   console.log(chainId)
-  const prefix = `https://explorer.wvm.dev/`
+  const prefix = `https://explorer.wvm.dev`
 
   switch (type) {
     case 'transaction': {
