@@ -84,7 +84,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cd ../v2-sdk && yarn build && cd ../interface-2.6.4 && react-scripts build",
+    "build": "cd ../v2-sdk && yarn install && yarn build && cd ../interface-2.6.4 && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
@@ -105,6 +105,5 @@
       "last 1 safari version"
     ]
   },
-  "license": "GPL-3.0-or-later",
-  "dependencies": {}
+  "license": "GPL-3.0-or-later"
 }
