@@ -86,7 +86,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cd ../v2-sdk && yarn install && npm run build && cd ../interface-2.6.4 && yarn link ../v2-sdk && yarn install && react-scripts build",
+    "build": "cd ../v2-sdk && yarn install && npm run build && cd ../interface-2.6.4 && pwd && yarn link ../v2-sdk && yarn install && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
