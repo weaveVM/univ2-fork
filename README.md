@@ -6,7 +6,32 @@
 - Yarn
 - Foundry (for smart contracts)
 
-## Setup
+## Setup (using scripts)
+
+### Interface (UI)
+
+If you don't have `NVM`, run `install.sh`:
+```bash
+cd packages/scripts/install
+sh ./nvm.sh
+# close your terminal, then reopen it and run:
+sh ./export-nvm.sh
+sh ./yarn.sh
+```
+
+If NVM and Yarn is installed, run `setup-project.sh` script in `scripts` folder:
+```bash
+cd packages/scripts/interface
+sh ./setup-project.sh
+```
+
+To run the interface on local:
+```bash
+cd packages/scripts/interface
+sh ./start-interface.sh
+```
+
+## Setup (manually)
 
 ### Interface
 
