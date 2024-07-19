@@ -80,13 +80,11 @@
     "typescript": "^3.8.3"
   },
   "resolutions": {
-    "@walletconnect/web3-provider": "1.1.1-alpha.0",
-    "sha3": "2.0.2",
-    "@uniswap/sdk": "portal:../v2-sdk"
+    "@walletconnect/web3-provider": "1.1.1-alpha.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cd ../v2-sdk && yarn install && npm run build && yarn link ../interface-2.6.4 --private && cd ../interface-2.6.4 && yarn install && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
