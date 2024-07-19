@@ -1,0 +1,1 @@
+sh contracts/build-tests.sh
