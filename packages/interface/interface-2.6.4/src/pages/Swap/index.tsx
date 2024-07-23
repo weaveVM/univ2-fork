@@ -315,7 +315,7 @@ export default function Swap() {
                       setApprovalSubmitted(false) // reset 2 step UI for approvals
                       onSwitchTokens()
                     }}
-                    color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.primary1 : theme.text2}
+                    color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.base[500] : theme.text2}
                   />
                 </ArrowWrapper>
                 {recipient === null && !showWrap && isExpertMode ? (

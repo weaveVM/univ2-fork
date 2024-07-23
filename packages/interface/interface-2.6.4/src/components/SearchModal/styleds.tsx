@@ -13,7 +13,7 @@ export const ModalInfo = styled.div`
 `
 
 export const FadedSpan = styled(RowFixed)`
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.base[500]};
   font-size: 14px;
 `
 
@@ -59,7 +59,7 @@ export const SearchInput = styled.input`
   }
   transition: border 100ms;
   :focus {
-    border: 1px solid ${({ theme }) => theme.primary1};
+    border: 1px solid ${({ theme }) => theme.base[500]};
     outline: none;
   }
 `

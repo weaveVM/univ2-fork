@@ -58,11 +58,11 @@ export function colors(darkMode: boolean): Colors {
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
-    primary1: darkMode ? '#4613b1' : '#ff007a',
-    primary2: darkMode ? '#3680E7' : '#FF8CC3',
-    primary3: darkMode ? '#4D8FEA' : '#FF99C9',
-    primary4: darkMode ? '#376bad70' : '#F6DDE8',
-    primary5: darkMode ? '#4613b170' : '#FDEAF1',
+    primary1: darkMode ? '#4613b1' : '#ff007a', // base.500
+    primary2: darkMode ? '#3680E7' : '#FF8CC3', // base.600
+    primary3: darkMode ? '#4D8FEA' : '#FF99C9', // base.300
+    primary4: darkMode ? '#376bad70' : '#F6DDE8', // base.700
+    primary5: darkMode ? '#4613b170' : '#FDEAF1', // base.800
 
     // color text
     primaryText1: darkMode ? '#ffffff60' : '#ff007a',
@@ -73,15 +73,31 @@ export function colors(darkMode: boolean): Colors {
     secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
     // other
-    red1: '#FF6871',
+    red1: '#F04438',
     red2: '#F82D3A',
-    green1: '#27AE60',
-    yellow1: '#FFE270',
-    yellow2: '#00e492'
+    green1: '#12B76A',
+    yellow1: '#F79009',
+    yellow2: '#039855',
+    greenBrand: '#078d5c',
 
     // dont wanna forget these blue yet
     // blue4: darkMode ? '#153d6f70' : '#C4D9F8',
     // blue5: darkMode ? '#153d6f70' : '#EBF4FF',
+
+    // new pallet
+    base: {
+      50: '#eff4ff',
+      100: '#dbe6fe',
+      200: '#bfd3fe',
+      300: '#93b4fd',
+      400: '#6090fa',
+      500: '#3b76f6',
+      600: '#2563eb',
+      700: '#1d58d8',
+      800: '#1e4baf',
+      900: '#1e408a',
+      950: '#172a54'
+    }
   }
 }
 
@@ -211,7 +227,7 @@ body {
   background-position: 0 -30vh;
   background-repeat: no-repeat;
   background-image: ${({ theme }) =>
-    `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
+    `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.base[500])} 0%, ${transparentize(
       1,
       theme.bg1
     )} 100%)`};

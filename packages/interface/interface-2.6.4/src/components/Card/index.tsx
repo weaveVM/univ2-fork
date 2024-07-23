@@ -27,20 +27,20 @@ export const OutlineCard = styled(Card)`
 `
 
 export const YellowCard = styled(Card)`
-  background-color: rgba(243, 132, 30, 0.05);
-  color: ${({ theme }) => theme.yellow2};
   font-weight: 500;
+  color: ${({ theme }) => theme.text1};
+  background-color: ${({ theme }) => theme.greenBrand};
 `
 
 export const PinkCard = styled(Card)`
   background-color: rgba(255, 0, 122, 0.03);
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.base[500]};
   font-weight: 500;
 `
 
 const BlueCardStyled = styled(Card)`
-  background-color: ${({ theme }) => theme.primary5};
-  color: ${({ theme }) => theme.primary1};
+  background-color: ${({ theme }) => theme.base[800]};
+  color: ${({ theme }) => theme.base[500]};
   border-radius: 12px;
   width: fit-content;
 `

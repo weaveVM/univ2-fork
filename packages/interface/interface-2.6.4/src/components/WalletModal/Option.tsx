@@ -10,7 +10,7 @@ const InfoCard = styled.button<{ active?: boolean }>`
   border-radius: 12px;
   width: 100% !important;
   &:focus {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.primary1};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.base[500]};
   }
   border-color: ${({ theme, active }) => (active ? 'transparent' : theme.bg3)};
 `
@@ -34,7 +34,7 @@ const OptionCardClickable = styled(OptionCard as any)<{ clickable?: boolean }>`
   margin-top: 0;
   &:hover {
     cursor: ${({ clickable }) => (clickable ? 'pointer' : '')};
-    border: ${({ clickable, theme }) => (clickable ? `1px solid ${theme.primary1}` : ``)};
+    border: ${({ clickable, theme }) => (clickable ? `1px solid ${theme.base[500]}` : ``)};
   }
   opacity: ${({ disabled }) => (disabled ? '0.5' : '1')};
 `
@@ -62,7 +62,7 @@ const CircleWrapper = styled.div`
 
 const HeaderText = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
-  color: ${props => (props.color === 'blue' ? ({ theme }) => theme.primary1 : ({ theme }) => theme.text1)};
+  color: ${props => (props.color === 'blue' ? ({ theme }) => theme.base[500] : ({ theme }) => theme.text1)};
   font-size: 1rem;
   font-weight: 500;
 `
