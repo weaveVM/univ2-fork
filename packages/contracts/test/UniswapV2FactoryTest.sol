@@ -59,9 +59,11 @@ contract UniswapV2FactoryTest is Test {
         );
 
         IUniswapV2Pair pair = IUniswapV2Pair(pairAddress);
+       address token0 = address(weth) < address(token1) ? address(weth) : address(token1);
+       address token1 = address(weth) < address(token1) ? address(token1) : address(weth);
 
-        assertEq(pair.token0(), address(token0));
-        assertEq(pair.token1(), address(weth));
+       assertEq(pair.token0(), token0);
+       assertEq(pair.token1(), token1);
     }
 
     function testCreatePairZeroAddress() public {
