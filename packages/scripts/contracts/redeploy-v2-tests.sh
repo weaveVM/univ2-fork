@@ -153,7 +153,7 @@ read CONSENT
 if [ "$CONSENT" = "yes" ] || [ "$CONSENT" = "y" ]; then
     echo "Beginning to build..."
     cd ../scripts/interface/
-    sh pre-build.sh
+    sh build.sh
     sh start-local-interface.sh
 else
     # Exit the script if the user does not consent
