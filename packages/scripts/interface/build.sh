@@ -19,3 +19,4 @@ yarn link $package_name --cwd ../../interface/interface-2.6.4
 
 # Install interface-2.6.4
 yarn --cwd ../../interface/interface-2.6.4 install --ignore-engines
+yarn --cwd ../../interface/interface-2.6.4 build
