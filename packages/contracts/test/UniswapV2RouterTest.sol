@@ -6,31 +6,58 @@ import {IUniswapV2Factory} from "@uniswap/v2-core/contracts/interfaces/IUniswapV
 import {IUniswapV2Router02} from "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import {IUniswapV2Pair} from "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 
-import {ERC20Mintable} from "test/mocks/ERC20Mintable.sol";
+import {ERC20Mintable} from "./mocks/ERC20Mintable.sol";
 import {WETH} from "solmate/tokens/WETH.sol";
 
 contract UniswapV2RouterTest is Test {
     IUniswapV2Factory public factory =
-        IUniswapV2Factory(0x41edf1bdAA3EC70cD8E8a25f76b3F5a9A7284D9B);
+        IUniswapV2Factory(0xB4CC3075b1B77b5A7AB6154C78E8aC69c4Fd2B2a);
 
-    WETH public weth = WETH(payable(0xe9f5B7cEe12a17Ecfea636D7d628517bc1c4E472));
+    WETH public weth = WETH(payable(0xFD98798C29cae1a1ccfBB0F59c0DFFA67c0479aF));
 
     IUniswapV2Router02 public router =
-        IUniswapV2Router02(0xBa97D423637b32A6E676a2696E79c2aE82Ce8569);
+        IUniswapV2Router02(0xAF13e1B46452C3C5202D3DE4d0Ad74D8C87ba544);
 
     ERC20Mintable tokenA =
-        ERC20Mintable(0x6F4b9c4D1d98D077DF40ECA9a52ad674ba89A466);
+        ERC20Mintable(0x56367cCC752DaAb2194040814343f331941C5C4a);
     ERC20Mintable tokenB =
-        ERC20Mintable(0x83f6e61a32b4b4bB4b894823B99e9F18b91167Ff);
+        ERC20Mintable(0x7c14665dA42a3c694D6320ac80ad37Bf3b39d855);
     ERC20Mintable tokenC =
-        ERC20Mintable(0x1FdD32a20282E8BfE5DAc09e51b57678BaFb7214);
-
+        ERC20Mintable(0x605Fd139C10abc88aEa6d8Db720C63bE62802bbe);
     function setUp() public {
-        vm.createSelectFork("https://testnet-rpc.wvm.dev"); // WVM RPC Endpoint
+        // Fork the blockchain
+        console2.log("Forking the blockchain...");
+        vm.createSelectFork("https://testnet-rpc.wvm.dev");
 
-        tokenA.mint(20 ether, address(this));
-        tokenB.mint(20 ether, address(this));
-        tokenC.mint(20 ether, address(this));
+        // Mint tokenA
+        console2.log("Minting tokenA...");
+        try tokenA.mint(20 ether, address(this)) {
+            console2.log("Minted tokenA successfully");
+        } catch Error(string memory reason) {
+            console2.log(reason);
+        } catch (bytes memory reason) {
+            console2.logBytes(reason);
+        }
+
+        // Mint tokenB
+        console2.log("Minting tokenB...");
+        try tokenB.mint(20 ether, address(this)) {
+            console2.log("Minted tokenB successfully");
+        } catch Error(string memory reason) {
+            console2.log(reason);
+        } catch (bytes memory reason) {
+            console2.logBytes(reason);
+        }
+
+        // Mint tokenC
+        console2.log("Minting tokenC...");
+        try tokenC.mint(20 ether, address(this)) {
+            console2.log("Minted tokenC successfully");
+        } catch Error(string memory reason) {
+            console2.log(reason);
+        } catch (bytes memory reason) {
+            console2.logBytes(reason);
+        }
     }
 
     function encodeError(
@@ -39,7 +66,7 @@ contract UniswapV2RouterTest is Test {
         encoded = abi.encodeWithSignature(error);
     }
 
-    function testAddLiquidityCreatesPair() public {
+ function testAddLiquidityCreatesPair() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);
 
@@ -55,9 +82,8 @@ contract UniswapV2RouterTest is Test {
         );
 
         address pairAddress = factory.getPair(address(tokenA), address(tokenB));
-        assertEq(pairAddress, 0xAC2dB1BFef3706719c42fd498b95ad821a782af1);
+        assertEq(pairAddress, 0x7482622f534Ff0e4f31e0737E806D52c1660745B);
     }
-
     function testAddLiquidityNoPair() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);

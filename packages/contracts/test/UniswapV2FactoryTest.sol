@@ -6,23 +6,23 @@ import {IUniswapV2Factory} from "@uniswap/v2-core/contracts/interfaces/IUniswapV
 import {IUniswapV2Router02} from "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import {IUniswapV2Pair} from "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 
-import {ERC20Mintable} from "test/mocks/ERC20Mintable.sol";
+import {ERC20Mintable} from "./mocks/ERC20Mintable.sol";
 import {WETH} from "solmate/tokens/WETH.sol";
 
 contract UniswapV2FactoryTest is Test {
     IUniswapV2Factory public factory =
-        IUniswapV2Factory(0x41edf1bdAA3EC70cD8E8a25f76b3F5a9A7284D9B);
+        IUniswapV2Factory(0xB4CC3075b1B77b5A7AB6154C78E8aC69c4Fd2B2a);
 
     WETH public weth =
-        WETH(payable(0xe9f5B7cEe12a17Ecfea636D7d628517bc1c4E472));
+        WETH(payable(0xFD98798C29cae1a1ccfBB0F59c0DFFA67c0479aF));
 
     IUniswapV2Router02 public router =
-        IUniswapV2Router02(0xBa97D423637b32A6E676a2696E79c2aE82Ce8569);
+        IUniswapV2Router02(0xAF13e1B46452C3C5202D3DE4d0Ad74D8C87ba544);
 
     ERC20Mintable token0 =
-        ERC20Mintable(0x6F4b9c4D1d98D077DF40ECA9a52ad674ba89A466);
+        ERC20Mintable(0x56367cCC752DaAb2194040814343f331941C5C4a);
     ERC20Mintable token1 =
-        ERC20Mintable(0x83f6e61a32b4b4bB4b894823B99e9F18b91167Ff);
+        ERC20Mintable(0x7c14665dA42a3c694D6320ac80ad37Bf3b39d855);
 
     function setUp() public {
         vm.createSelectFork("https://testnet-rpc.wvm.dev"); // WVM RPC Endpoint
@@ -38,8 +38,11 @@ contract UniswapV2FactoryTest is Test {
 
         IUniswapV2Pair pair = IUniswapV2Pair(pairAddress);
 
-        assertEq(pair.token1(), address(weth));
-        assertEq(pair.token0(), address(token1));
+        address token0 = address(weth) < address(token1) ? address(weth) : address(token1);
+        address token1 = address(weth) < address(token1) ? address(token1) : address(weth);
+
+        assertEq(pair.token0(), token0);
+        assertEq(pair.token1(), token1);
     }
 
     function testCreatePairZeroAddress() public {
