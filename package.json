@@ -1,0 +1,20 @@
+{
+  "name": "univ2-fork",
+  "version": "1.0.0",
+  "description": "## Prerequisites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd packages/scripts/interface && sh build.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weaveVM/univ2-fork.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weaveVM/univ2-fork/issues"
+  },
+  "homepage": "https://github.com/weaveVM/univ2-fork#readme"
+}
