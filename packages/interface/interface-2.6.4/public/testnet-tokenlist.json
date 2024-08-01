@@ -8,9 +8,9 @@
         "symbol": "WtWVM",
         "name": "Wrapped tWVM",
         "decimals": 18,
-        "logoURI": "",
+        "logoURI": "ipfs://QmUSNbwUxUYNMvMksKypkgWs8unSm8dX2GjCPBVGZ7GGMr",
         "tags": [
-          "Wrapped tWVM"
+          "wrapped"
         ]
       },
       {
@@ -19,9 +19,9 @@
         "symbol": "TKNA",
         "name": "Token A",
         "decimals": 18,
-        "logoURI": "",
+        "logoURI": "ipfs://QmUSNbwUxUYNMvMksKypkgWs8unSm8dX2GjCPBVGZ7GGMr",
         "tags": [
-          "Token A"
+          "erc20"
         ]
       },
       {
@@ -30,47 +30,12 @@
         "symbol": "TKNB",
         "name": "Token B",
         "decimals": 18,
-        "logoURI": "",
+        "logoURI": "ipfs://QmUSNbwUxUYNMvMksKypkgWs8unSm8dX2GjCPBVGZ7GGMr",
         "tags": [
-          "Token B"
+          "erc20"
         ]
       }
     ],
-    "tokenMap": {
-      "9496_0x7F6A3e129D53fc9AE2E52a6eD21ef75ef1aA6762": {
-        "chainId": 9496,
-        "address": "0x7F6A3e129D53fc9AE2E52a6eD21ef75ef1aA6762",
-        "symbol": "WtWVM",
-        "name": "Wrapped tWVM",
-        "decimals": 18,
-        "logoURI": "",
-        "tags": [
-          "Wrapped tWVM"
-        ]
-      },
-      "9496_0x56367cCC752DaAb2194040814343f331941C5C4a": {
-        "chainId": 9496,
-        "address": "0x56367cCC752DaAb2194040814343f331941C5C4a",
-        "symbol": "TKNA",
-        "name": "Token A",
-        "decimals": 18,
-        "logoURI": "",
-        "tags": [
-          "Token A"
-        ]
-      },
-      "9496_0x7c14665dA42a3c694D6320ac80ad37Bf3b39d855":{
-        "chainId": 9496,
-        "address": "0x7c14665dA42a3c694D6320ac80ad37Bf3b39d855",
-        "symbol": "TKNB",
-        "name": "Token B",
-        "decimals": 18,
-        "logoURI": "",
-        "tags": [
-          "Token B"
-        ]
-      }
-    }, 
     "version": {
       "major": 1,
       "minor": 0,
