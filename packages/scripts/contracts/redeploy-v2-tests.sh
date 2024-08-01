@@ -55,9 +55,9 @@ OUTPUT_FILE="../scripts/logs/redeploy_output.txt"
 log_message "Current directory: $(pwd)"
 
 
-log_message "Deploying WETH..."
-WETH_ADDRESS=$(forge create --rpc-url $RPC_URL test/mocks/WWVM.sol:WWVM --private-key $PRIVATE_KEY | grep "Deployed to" | awk '{print $3}')
-log_message "WETH deployed to: $WETH_ADDRESS"
+log_message "Deploying WETH (WtWVM)..."
+WETH_ADDRESS=$(forge create --rpc-url $RPC_URL test/mocks/WtWVM.sol:WtWVM --private-key $PRIVATE_KEY | grep "Deployed to" | awk '{print $3}')
+log_message "WETH (WtWVM) deployed to: $WETH_ADDRESS"
 
 log_message "Deploying UniswapV2Factory..."
 FEE_TO_SETTER="$PUBLIC_KEY"
