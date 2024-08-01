@@ -4,7 +4,7 @@
   "description": "## Prerequisites",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd packages/interface/interface-2.6.4 && yarn start",
     "build": "cd packages/scripts/interface && sh build.sh"
   },
   "repository": {
