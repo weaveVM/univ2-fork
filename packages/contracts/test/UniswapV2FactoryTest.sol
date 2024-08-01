@@ -14,7 +14,7 @@ contract UniswapV2FactoryTest is Test {
         IUniswapV2Factory(0xB4CC3075b1B77b5A7AB6154C78E8aC69c4Fd2B2a);
 
     WETH public weth =
-        WETH(payable(0xFD98798C29cae1a1ccfBB0F59c0DFFA67c0479aF));
+        WETH(payable(0x7F6A3e129D53fc9AE2E52a6eD21ef75ef1aA6762));
 
     IUniswapV2Router02 public router =
         IUniswapV2Router02(0xAF13e1B46452C3C5202D3DE4d0Ad74D8C87ba544);
