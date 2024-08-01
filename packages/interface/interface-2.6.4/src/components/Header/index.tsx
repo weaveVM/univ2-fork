@@ -5,10 +5,8 @@ import { Text } from 'rebass'
 
 import styled from 'styled-components'
 
-// import Logo from '../../assets/svg/logo.svg'
-import LogoDark from '../../assets/svg/logo_white.svg'
-// import Wordmark from '../../assets/svg/wordmark.svg'
-import WordmarkDark from '../../assets/svg/wordmark_white.svg'
+import LogoDark from '../../assets/svg/TapestryLogo.svg'
+import WordmarkDark from '../../assets/svg/TapestryWord.svg'
 import { useActiveWeb3React } from '../../hooks'
 // import { useDarkModeManager } from '../../state/user/hooks'
 import { useETHBalances } from '../../state/wallet/hooks'
@@ -127,7 +125,7 @@ const BalanceText = styled(Text)`
 `
 
 const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
-  [ChainId.WEAVE]: 'Weave',
+  [ChainId.WEAVE]: 'WeaveVM',
   [ChainId.MAINNET]: null,
   [ChainId.RINKEBY]: 'Rinkeby',
   [ChainId.ROPSTEN]: 'Ropsten',
@@ -148,11 +146,11 @@ export default function Header() {
           <Title href=".">
             <UniIcon>
               {/* <img src={isDark ? LogoDark : Logo} alt="logo" /> */}
-              <img src={LogoDark} alt="logo" />
+              <img src={LogoDark} alt="logo" width="20" height="20" />
             </UniIcon>
             <TitleText>
               {/* <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" /> */}
-              <img style={{ marginLeft: '4px', marginTop: '4px' }} src={WordmarkDark} alt="logo" />
+              <img style={{ marginLeft: '4px', marginTop: '0px' }} src={WordmarkDark} alt="wordmark" width="100" height="20" />
             </TitleText>
           </Title>
         </HeaderElement>
