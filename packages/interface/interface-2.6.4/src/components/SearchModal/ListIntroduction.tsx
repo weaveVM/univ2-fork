@@ -5,13 +5,13 @@ import { ButtonPrimary } from '../Button'
 import { OutlineCard } from '../Card'
 import Column, { AutoColumn } from '../Column'
 import { PaddedColumn } from './styleds'
-import { useDarkModeManager } from '../../state/user/hooks'
+// import { useDarkModeManager } from '../../state/user/hooks'
 
-import listLight from '../../assets/images/token-list/lists-light.png'
+// import listLight from '../../assets/images/token-list/lists-light.png'
 import listDark from '../../assets/images/token-list/lists-dark.png'
 
 export default function ListIntroduction({ onSelectList }: { onSelectList: () => void }) {
-  const [isDark] = useDarkModeManager()
+  // const [isDark] = useDarkModeManager()
 
   return (
     <Column style={{ width: '100%', flex: '1 1' }}>
@@ -19,7 +19,8 @@ export default function ListIntroduction({ onSelectList }: { onSelectList: () =>
         <AutoColumn gap="14px">
           <img
             style={{ width: '120px', margin: '0 auto' }}
-            src={isDark ? listDark : listLight}
+            // src={isDark ? listDark : listLight}
+            src={listDark}
             alt="token-list-preview"
           />
           <img
