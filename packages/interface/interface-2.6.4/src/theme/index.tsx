@@ -6,7 +6,6 @@ import styled, {
   css,
   DefaultTheme
 } from 'styled-components'
-// import { useIsDarkMode } from '../state/user/hooks'
 import { Text, TextProps } from 'rebass'
 import { Colors } from './styled'
 
@@ -34,61 +33,57 @@ const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } 
 const white = '#FFFFFF'
 const black = '#000000'
 
-export function colors(darkMode: boolean): Colors {
+export function colors(): Colors {
   return {
     // base
     white,
     black,
 
     // text
-    text1: darkMode ? '#FFFFFF' : '#000000',
-    text2: darkMode ? '#C3C5CB' : '#565A69',
-    text3: darkMode ? '#6C7284' : '#888D9B',
-    text4: darkMode ? '#565A69' : '#C3C5CB',
-    text5: darkMode ? '#2C2F36' : '#EDEEF2',
+    text1: white,
+    text2: '#C3C5CB',
+    text3: '#6C7284',
+    text4: '#565A69',
+    text5: '#2C2F36',
 
     // backgrounds / greys
-    bg1: darkMode ? '#212429' : '#FFFFFF',
-    bg2: darkMode ? '#2C2F36' : '#F7F8FA',
-    bg3: darkMode ? '#40444F' : '#EDEEF2',
-    bg4: darkMode ? '#565A69' : '#CED0D9',
-    bg5: darkMode ? '#6C7284' : '#888D9B',
+    bg1: '#212429',
+    bg2: '#1d1f24',
+    bg3: '#40444F',
+    bg4: '#565A69',
+    bg5: '#6C7284',
 
-    //specialty colors
-    modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
-    advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
+    // specialty colors
+    modalBG: 'rgba(0,0,0,.425)',
+    advancedBG: 'rgba(0,0,0,0.1)',
 
-    //primary colors
-    primary1: darkMode ? '#4613b1' : '#ff007a',
-    primary2: darkMode ? '#3680E7' : '#FF8CC3',
-    primary3: darkMode ? '#4D8FEA' : '#FF99C9',
-    primary4: darkMode ? '#376bad70' : '#F6DDE8',
-    primary5: darkMode ? '#4613b170' : '#FDEAF1',
+    // primary colors
+    primary1: '#334BFF', // active swap button, search border, bal spinner, arrow, 
+    primary2: 'red',//'#3680E7', // unused?
+    primary3: 'green',// '#4D8FEA', // unused?
+    primary4: '#334BFF50', // '#376bad70', // 'change button' in Account, when pending. Highlight on nav addr when clicked.
+    primary5: '#334BFF50', // 'max' button bg, connect wallet button 
 
     // color text
-    primaryText1: darkMode ? '#ffffff60' : '#ff007a',
+    primaryText1: '#ffffff60',
 
     // secondary colors
-    secondary1: darkMode ? '#4613b1' : '#ff007a',
-    secondary2: darkMode ? '#17000b26' : '#F6DDE8',
-    secondary3: darkMode ? '#17000b26' : '#FDEAF1',
+    secondary1: '#4613b1',
+    secondary2: '#17000b26',
+    secondary3: '#17000b26',
 
     // other
-    red1: '#FF6871',
+    red1: '#B93131',
     red2: '#F82D3A',
     green1: '#27AE60',
-    yellow1: '#FFE270',
-    yellow2: '#00e492'
-
-    // dont wanna forget these blue yet
-    // blue4: darkMode ? '#153d6f70' : '#C4D9F8',
-    // blue5: darkMode ? '#153d6f70' : '#EBF4FF',
+    yellow1: '#FFC41C',
+    yellow2: '#00e492' // color of "WeaveVM" in the network indicator
   }
 }
 
-export function theme(darkMode: boolean): DefaultTheme {
+export function theme(): DefaultTheme {
   return {
-    ...colors(darkMode),
+    ...colors(),
 
     grids: {
       sm: 8,
@@ -96,8 +91,8 @@ export function theme(darkMode: boolean): DefaultTheme {
       lg: 24
     },
 
-    //shadows
-    shadow1: darkMode ? '#000' : '#2F80ED',
+    // shadows
+    shadow1: black,
 
     // media queries
     mediaWidth: mediaWidthTemplates,
@@ -115,10 +110,7 @@ export function theme(darkMode: boolean): DefaultTheme {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // const darkMode = useIsDarkMode()
-
-  // const themeObject = useMemo(() => theme(darkMode), [darkMode])
-  const themeObject = useMemo(() => theme(true), []);
+  const themeObject = useMemo(() => theme(), []);
 
   return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
 }

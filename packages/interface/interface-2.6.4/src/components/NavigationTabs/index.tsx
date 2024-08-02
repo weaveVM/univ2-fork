@@ -30,11 +30,23 @@ const StyledNavLink = styled(NavLink).attrs({
   text-decoration: none;
   color: ${({ theme }) => theme.text3};
   font-size: 20px;
+  position: relative;
 
   &.${activeClassName} {
     border-radius: 12px;
     font-weight: 500;
     color: ${({ theme }) => theme.text1};
+
+    ::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; /* Adjust the position of the line */
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: ${({ theme }) => theme.yellow1};
+      border-radius: 1px;
+    }
   }
 
   :hover,
