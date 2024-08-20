@@ -32,6 +32,7 @@ import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
 import { useToggleSettingsMenu, useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/swap/actions'
 import {
+  tryParseAmount,
   useDefaultsFromURLSearch,
   useDerivedSwapInfo,
   useSwapActionHandlers,
@@ -44,7 +45,7 @@ import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
-// import CreateV2SwapTrade from '../../utils/createV2SwapTrade'
+import { useTradeExactIn } from '../../hooks/Trades'
 // import { useTokenBalance } from '../../state/wallet/hooks'
 
 export default function Swap() {
@@ -98,6 +99,14 @@ export default function Swap() {
   const WETHToken = WETH[chainId || 9496];
   const WETHAddress = WETHToken.address
   const WETHCurrency = useCurrency(WETHAddress)
+  
+  const inputCurrency = useCurrency(WETH[chainId || 9496].address)
+  const outputCurrency = useCurrency(v2Trade?.route?.path[1]?.address || "")
+
+  const parsedAmountWrapped = tryParseAmount(typedValue, (true ? inputCurrency : outputCurrency) ?? undefined)
+
+  const bestTradeExactIn = useTradeExactIn(true ? parsedAmountWrapped : undefined, outputCurrency ?? undefined)
+
   // const WETHBalance = useTokenBalance(account || "", WETHToken);
   // console.log("bal", WETHBalance?.raw)
   const { execute: wrapWETH } = useWrapCallback(
@@ -261,9 +270,10 @@ export default function Swap() {
     const inputTokenIsETH = Boolean(inputToken?.name === ETHCurrency?.name)
     const outputTokenIsNotWETHOrETH = Boolean(outputToken && outputToken?.name !== ETHCurrency?.name && outputToken.address !== (WETH[outputToken?.chainId || 9496 as ChainId]).address)
     console.log(inputTokenIsETH, outputTokenIsNotWETHOrETH);
-    // if (v2Trade?.route?.path[1]?.address && typedValue && trade && inputTokenIsETH && outputTokenIsNotWETHOrETH) {
-    //   trade = CreateV2SwapTrade(WETH[chainId || 9496].address, v2Trade?.route?.path[1]?.address || "", typedValue) || trade;
-    // };
+    if (v2Trade?.route?.path[1]?.address && typedValue && trade && inputTokenIsETH && outputTokenIsNotWETHOrETH) {
+      // @ts-ignore
+      trade = bestTradeExactIn;
+    };
 
     if (wrapWETH) {
       // // console.log(WETHBalance);
