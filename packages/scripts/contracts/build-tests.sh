@@ -1,7 +1,12 @@
 #!/bin/bash
-
+echo "WARNING! This file is currently unoperational."
+exit
 # Define the output file for build process
 OUTPUT_FILE="../logs/build_output.txt"
+if [ ! -f $OUTPUT_FILE ]; then
+    touch "$OUTPUT_FILE"
+    echo "File $OUTPUT_FILE created."
+fi
 
 # Function to log messages
 log_message() {
@@ -19,14 +24,14 @@ forge update
 forge install
 
 # Locate the UniswapV2Pair.sol JSON file
-log_message "Locating UniswapV2Pair.sol JSON file"
-FILE_PATH=$(find out/ -name "UniswapV2Pair.json")
-if [ -z "$FILE_PATH" ]; then
-    log_message "Error: UniswapV2Pair.json not found"
-    exit 1
-else
-    log_message "Found UniswapV2Pair.json at $FILE_PATH"
-fi
+# log_message "Locating UniswapV2Pair.sol JSON file"
+# FILE_PATH=$(find out/ -name "UniswapV2Pair.json")
+# if [ -z "$FILE_PATH" ]; then
+#     log_message "Error: UniswapV2Pair.json not found"
+#     exit 1
+# else
+#     log_message "Found UniswapV2Pair.json at $FILE_PATH"
+# fi
 
 # Calculate INIT_CODE_HASH using Python
 log_message "Calculating INIT_CODE_HASH"
@@ -41,9 +46,9 @@ INIT_CODE_HASH="1b618b650ce9edf7d9a8d8f2c0dc36bd4ef652c9ea5110e01490c34b98d0b107
 log_message "Calculated INIT_CODE_HASH: $INIT_CODE_HASH"
 
 # Update INIT_CODE_HASH in UniswapV2Library.sol
-log_message "Updating INIT_CODE_HASH in UniswapV2Library.sol"
-sed -i "s/hex'\([a-f0-9]\{64\}\)'/hex'$INIT_CODE_HASH'/" lib/v2-periphery/contracts/libraries/UniswapV2Library.sol
-log_message "Updated UniswapV2Library.sol with new INIT_CODE_HASH"
+# log_message "Updating INIT_CODE_HASH in UniswapV2Library.sol"
+# sed -i "s/hex'\([a-f0-9]\{64\}\)'/hex'$INIT_CODE_HASH'/" lib/v2-periphery/contracts/libraries/UniswapV2Library.sol
+# log_message "Updated UniswapV2Library.sol with new INIT_CODE_HASH"
 
 # Build the contracts using Forge
 log_message "Building contracts with Forge"

@@ -13,10 +13,10 @@ contract UniswapV2RouterTest is Test {
     IUniswapV2Factory public factory =
         IUniswapV2Factory(0xB4CC3075b1B77b5A7AB6154C78E8aC69c4Fd2B2a);
 
-    WETH public weth = WETH(payable(0x7F6A3e129D53fc9AE2E52a6eD21ef75ef1aA6762));
+    WETH public weth = WETH(payable(0x1a3Dd576467eAb8189796da67e4AE1df8afF6422));
 
     IUniswapV2Router02 public router =
-        IUniswapV2Router02(0xAF13e1B46452C3C5202D3DE4d0Ad74D8C87ba544);
+        IUniswapV2Router02(0x120040D577Bc571B07A646536f40a7398A886461);
 
     ERC20Mintable tokenA =
         ERC20Mintable(0x56367cCC752DaAb2194040814343f331941C5C4a);
@@ -82,7 +82,7 @@ contract UniswapV2RouterTest is Test {
         );
 
         address pairAddress = factory.getPair(address(tokenA), address(tokenB));
-        assertEq(pairAddress, 0x7482622f534Ff0e4f31e0737E806D52c1660745B);
+        assertEq(pairAddress, 0x3A52e781CDf306DA5643Bf8e5FEb7403d352B3b1);
     }
     function testAddLiquidityNoPair() public {
         tokenA.approve(address(router), 1 ether);

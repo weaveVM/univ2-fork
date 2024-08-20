@@ -4,7 +4,7 @@
     "tokens": [
       {
         "chainId": 9496,
-        "address": "0x7F6A3e129D53fc9AE2E52a6eD21ef75ef1aA6762",
+        "address": "0x71a3D3d56f7f80eC4BD5244482dF6eA565587158",
         "symbol": "wtWVM",
         "name": "Wrapped tWVM",
         "decimals": 18,
@@ -15,7 +15,7 @@
       },
       {
         "chainId": 9496,
-        "address": "0x56367cCC752DaAb2194040814343f331941C5C4a",
+        "address": "0x590e316caD7aE1Db94876B601538B6b3e22Af364",
         "symbol": "TKNA",
         "name": "Token A",
         "decimals": 18,
@@ -26,9 +26,9 @@
       },
       {
         "chainId": 9496,
-        "address": "0x7c14665dA42a3c694D6320ac80ad37Bf3b39d855",
-        "symbol": "TKNB",
-        "name": "Token B",
+        "address": "0xC2a4fAdfeD33f6E35b8AA1e7c5De464f50c15049",
+        "symbol": "TKN1",
+        "name": "Token 1",
         "decimals": 18,
         "logoURI": "ipfs://QmUSNbwUxUYNMvMksKypkgWs8unSm8dX2GjCPBVGZ7GGMr",
         "tags": [

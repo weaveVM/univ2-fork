@@ -3,6 +3,19 @@
 # Define the output file
 OUTPUT_FILE="logs/redeploy_output.txt"
 
+directory=$(dirname "$OUTPUT_FILE")
+filename=$(basename "$OUTPUT_FILE")
+
+if [ ! -d "$directory" ]; then
+    mkdir -p "$directory"
+    echo "Directory $directory created."
+fi
+
+if [ ! -f $OUTPUT_FILE ]; then
+    touch "$OUTPUT_FILE"
+    echo "File $OUTPUT_FILE created."
+fi
+
 # Function to log messages
 log_message() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$OUTPUT_FILE"
@@ -42,6 +55,6 @@ log_message "Private key received (hidden for security)"
 export PRIVATE_KEY
 log_message "Private key exported as environment variable."
 
-cd ../contracts
+cd ./contracts
 
 sh ./build-tests.sh

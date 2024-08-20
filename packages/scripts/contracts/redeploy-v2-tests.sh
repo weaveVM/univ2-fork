@@ -3,6 +3,20 @@
 # Define the output file
 OUTPUT_FILE="../logs/redeploy_output.txt"
 
+directory=$(dirname "$OUTPUT_FILE")
+filename=$(basename "$OUTPUT_FILE")
+
+if [ ! -d "$directory" ]; then
+    mkdir -p "$directory"
+    echo "Directory $directory created."
+fi
+
+if [ ! -f $OUTPUT_FILE ]; then
+    touch "$OUTPUT_FILE"
+    echo "File $OUTPUT_FILE created."
+fi
+
+
 # Function to log messages
 log_message() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$OUTPUT_FILE"
@@ -73,6 +87,18 @@ else
     log_message "Failed to update FACTORY_ADDRESS"
 fi
 
+sed -i "s/\[ChainId\.WEAVE\]: new Token(ChainId\.WEAVE, '0x[a-fA-F0-9]\{40\}', 18, 'WtWVM', 'Wrapped tWVM')/[ChainId.WEAVE]: new Token(ChainId.WEAVE, '$WETH_ADDRESS', 18, 'WtWVM', 'Wrapped tWVM')/" "../interface/v2-sdk/src/entities/token.ts"
+
+if [ $? -eq 0 ]; then
+    echo "Updated token.ts file with new WETH_ADDRESS: $WETH_ADDRESS"
+else
+    echo "Failed to update WETH_ADDRESS in token.ts"
+fi
+
+log_message "Deploying Multicall..."
+MULTICALL_ADDRESS=$(forge create --rpc-url $RPC_URL test/mocks/Multicall.sol:Multicall --private-key $PRIVATE_KEY | grep "Deployed to" | awk '{print $3}')
+log_message "Multicall deployed to: $MULTICALL_ADDRESS"
+
 log_message "Deploying UniswapV2Router02..."
 ROUTER_ADDRESS=$(forge create --rpc-url $RPC_URL lib/v2-periphery/contracts/UniswapV2Router02.sol:UniswapV2Router02 --constructor-args $FACTORY_ADDRESS $WETH_ADDRESS --private-key $PRIVATE_KEY | grep "Deployed to" | awk '{print $3}')
 log_message "UniswapV2Router02 deployed to: $ROUTER_ADDRESS"
@@ -88,21 +114,21 @@ log_message "Token1 deployed to: $TOKEN1_ADDRESS"
 TOKEN_A_ADDRESS="$TOKEN0_ADDRESS"
 TOKEN_B_ADDRESS="$TOKEN1_ADDRESS"
 
-# rewrite to get address from running the test suite
-DEFAULT_PAIR_ADDRESS="0x3A52e781CDf306DA5643Bf8e5FEb7403d352B3b1" # random non-working address
-output=$(python3 ../scripts/helpers/deploy_and_add_liquidity.py --rpc_url "$RPC_URL" --private_key "$PRIVATE_KEY" --token_a "$TOKEN_A_ADDRESS" --token_b "$TOKEN_B_ADDRESS" --factory_address "$FACTORY_ADDRESS")
+# # rewrite to get address from running the test suite
+# DEFAULT_PAIR_ADDRESS="0x3A52e781CDf306DA5643Bf8e5FEb7403d352B3b1" # random non-working address
+# output=$(python3 ../scripts/helpers/deploy_and_add_liquidity.py --rpc_url "$RPC_URL" --private_key "$PRIVATE_KEY" --token_a "$TOKEN_A_ADDRESS" --token_b "$TOKEN_B_ADDRESS" --factory_address "$FACTORY_ADDRESS")
 
-# Extract the pair address from the output
-PAIR_ADDRESS=$(echo "$output" | grep "Pair address is:" | awk '{print $4}')
-log $PAIR_ADDRESS
-# If PAIR_ADDRESS is empty, use the default address
-if [ -z "$PAIR_ADDRESS" ]; then
-    PAIR_ADDRESS=$DEFAULT_PAIR_ADDRESS
-fi
+# # Extract the pair address from the output
+# PAIR_ADDRESS=$(echo "$output" | grep "Pair address is:" | awk '{print $4}')
+# log $PAIR_ADDRESS
+# # If PAIR_ADDRESS is empty, use the default address
+# if [ -z "$PAIR_ADDRESS" ]; then
+#     PAIR_ADDRESS=$DEFAULT_PAIR_ADDRESS
+# fi
 
 # Update the Solidity test file with the new pair address
-log_message "Updating Solidity test file with the new pair address $PAIR_ADDRESS"
-sed -i "s/assertEq(pairAddress, 0x[a-fA-F0-9]\{40\});/assertEq(pairAddress, $PAIR_ADDRESS);/" test/UniswapV2RouterTest.sol
+# log_message "Updating Solidity test file with the new pair address $PAIR_ADDRESS"
+# sed -i "s/assertEq(pairAddress, 0x[a-fA-F0-9]\{40\});/assertEq(pairAddress, $PAIR_ADDRESS);/" test/UniswapV2RouterTest.sol
 
 log_message "Deploying Token C..."
 TOKEN_C_ADDRESS=$(forge create --rpc-url $RPC_URL test/mocks/ERC20Mintable.sol:ERC20Mintable --constructor-args "Token C" "TKNC" --private-key $PRIVATE_KEY | grep "Deployed to" | awk '{print $3}')
@@ -133,6 +159,22 @@ awk -v tokenA="$TOKEN_A_ADDRESS" -v tokenB="$TOKEN_B_ADDRESS" -v tokenC="$TOKEN_
 
 # Update the RPC URL in another test file
 sed -i "s|vm.createSelectFork(.*);|vm.createSelectFork(\"$RPC_URL\");|" test/UniswapV2RouterTest.sol
+
+sed -i "s/export const ROUTER_ADDRESS = '0x[a-fA-F0-9]\{40\}'/export const ROUTER_ADDRESS = '$ROUTER_ADDRESS'/" "../interface/interface-2.6.4/src/constants/index.ts"
+
+if [ $? -eq 0 ]; then
+    echo "Updated index.ts file with new ROUTER_ADDRESS: $ROUTER_ADDRESS"
+else
+    echo "Failed to update ROUTER_ADDRESS in index.ts"
+fi
+
+sed -i "s/\[ChainId\.WEAVE\]: '0x[a-fA-F0-9]\{40\}'/[ChainId.WEAVE]: '$MULTICALL_ADDRESS'/" "../interface/interface-2.6.4/src/constants/multicall/index.ts"
+
+if [ $? -eq 0 ]; then
+    echo "Updated multicall index.ts file with new MULTICALL_ADDRESS: $MULTICALL_ADDRESS"
+else
+    echo "Failed to update MULTICALL_ADDRESS in multicall index.ts"
+fi
 
 # Log the changes
 log_message "Updated UniswapV2RouterTest.sol with newly deployed addresses"

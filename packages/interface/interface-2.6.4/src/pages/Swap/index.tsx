@@ -1,4 +1,4 @@
-import { CurrencyAmount, JSBI, Token, Trade } from '@uniswap/sdk'
+import { ChainId, CurrencyAmount, JSBI, Token, Trade, WETH } from '@uniswap/sdk'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ArrowDown } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -44,6 +44,8 @@ import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
+// import CreateV2SwapTrade from '../../utils/createV2SwapTrade'
+// import { useTokenBalance } from '../../state/wallet/hooks'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -62,7 +64,7 @@ export default function Swap() {
     setDismissTokenWarning(true)
   }, [])
 
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
 
   // toggle wallet when disconnected
@@ -90,21 +92,36 @@ export default function Swap() {
     currencies[Field.INPUT],
     currencies[Field.OUTPUT],
     typedValue
-  )
+  );
+
+  const ETHCurrency = useCurrency('ETH')
+  const WETHToken = WETH[chainId || 9496];
+  const WETHAddress = WETHToken.address
+  const WETHCurrency = useCurrency(WETHAddress)
+  // const WETHBalance = useTokenBalance(account || "", WETHToken);
+  // console.log("bal", WETHBalance?.raw)
+  const { execute: wrapWETH } = useWrapCallback(
+    // @ts-ignore
+    ETHCurrency,
+    WETHCurrency,
+    typedValue
+  );
+
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const { address: recipientAddress } = useENSAddress(recipient)
   const toggledVersion = useToggledVersion()
-  const trade = showWrap
+  let trade = showWrap
     ? undefined
     : {
         [Version.v1]: v1Trade,
         [Version.v2]: v2Trade
       }[toggledVersion]
 
+
   const betterTradeLinkVersion: Version | undefined =
-    toggledVersion === Version.v2 && isTradeBetter(v2Trade, v1Trade, BETTER_TRADE_LINK_THRESHOLD)
+    toggledVersion === Version.v2 && isTradeBetter(trade, v1Trade, BETTER_TRADE_LINK_THRESHOLD)
       ? Version.v1
-      : toggledVersion === Version.v1 && isTradeBetter(v1Trade, v2Trade)
+      : toggledVersion === Version.v1 && isTradeBetter(v1Trade, trade)
       ? Version.v2
       : undefined
 
@@ -189,14 +206,10 @@ export default function Swap() {
 
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
 
-  const handleSwap = useCallback(() => {
-    if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee)) {
+  const finalizeSwap = async () => {
+    if (!swapCallback || !WETHCurrency) {
       return
     }
-    if (!swapCallback) {
-      return
-    }
-    setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
     swapCallback()
       .then(hash => {
         setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
@@ -225,7 +238,41 @@ export default function Swap() {
           txHash: undefined
         })
       })
-  }, [tradeToConfirm, account, priceImpactWithoutFee, recipient, recipientAddress, showConfirm, swapCallback, trade])
+  }
+
+  const handleSwap = useCallback(async() => {
+    if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee)) {
+      return
+    }
+    // Autoswap to WETH Feature Spec
+    // 1. Check if input is ONLY ETH
+    // 2. Check if ouput is NOT ETH or WETH 
+    // 3. Check WETH balance
+    // 4. If not enough to cover the trade, launch wrap action
+    // 5. Swap ETH in tradeToConfirm object to WETH
+    // && WETHBalance?.lessThan(trade?.inputAmount.raw || BigInt(0)
+    // if (inputTokenIsETH && outputTokenIsNotWETHOrETH) {
+    // trade = CreateV2SwapTrade(WETH[chainId || 9496].address, v2Trade?.route?.path[1]?.address || "", typedValue) || trade;
+    // debugger;
+    // Compare tWVM size vs WtWVM balance
+    // && WETHBalance?.lessThan(trade?.inputAmount.raw || BigInt(0)
+    const inputToken = trade?.route.input
+    const outputToken = trade?.route.path[1]
+    const inputTokenIsETH = Boolean(inputToken?.name === ETHCurrency?.name)
+    const outputTokenIsNotWETHOrETH = Boolean(outputToken && outputToken?.name !== ETHCurrency?.name && outputToken.address !== (WETH[outputToken?.chainId || 9496 as ChainId]).address)
+    console.log(inputTokenIsETH, outputTokenIsNotWETHOrETH);
+    // if (v2Trade?.route?.path[1]?.address && typedValue && trade && inputTokenIsETH && outputTokenIsNotWETHOrETH) {
+    //   trade = CreateV2SwapTrade(WETH[chainId || 9496].address, v2Trade?.route?.path[1]?.address || "", typedValue) || trade;
+    // };
+
+    if (wrapWETH) {
+      // // console.log(WETHBalance);
+      // debugger;
+      await wrapWETH()
+    }
+
+    finalizeSwap()
+  }, [tradeToConfirm, account, priceImpactWithoutFee, recipient, recipientAddress, showConfirm, swapCallback, trade, trade])
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false)
