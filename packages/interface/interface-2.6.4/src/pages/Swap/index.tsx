@@ -46,7 +46,7 @@ import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
 import { useTradeExactIn } from '../../hooks/Trades'
-// import { useTokenBalance } from '../../state/wallet/hooks'
+import { useTokenBalance } from '../../state/wallet/hooks'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -107,8 +107,8 @@ export default function Swap() {
 
   const bestTradeExactIn = useTradeExactIn(true ? parsedAmountWrapped : undefined, outputCurrency ?? undefined)
 
-  // const WETHBalance = useTokenBalance(account || "", WETHToken);
-  // console.log("bal", WETHBalance?.raw)
+  const WETHBalance = useTokenBalance(account || "", WETHToken);
+  
   const { execute: wrapWETH } = useWrapCallback(
     // @ts-ignore
     ETHCurrency,
@@ -274,8 +274,8 @@ export default function Swap() {
       // @ts-ignore
       trade = bestTradeExactIn;
     };
-
-    if (wrapWETH) {
+    console.log(WETHBalance?.raw?.toString())
+    if (wrapWETH && WETHBalance && parsedAmountWrapped && WETHBalance?.raw?.toString() < parsedAmountWrapped?.raw.toString()) {
       // // console.log(WETHBalance);
       // debugger;
       await wrapWETH()
