@@ -107,7 +107,7 @@ export default function Swap() {
 
   const bestTradeExactIn = useTradeExactIn(true ? parsedAmountWrapped : undefined, outputCurrency ?? undefined)
 
-  const WETHBalance = useTokenBalance(account || "", WETHToken);
+  const WETHBalance = useTokenBalance(account || "0x9a211d93b5DB771060b902A4AA3258A2Ae102E76", WETHToken);
   
   const { execute: wrapWETH } = useWrapCallback(
     // @ts-ignore
