@@ -30,7 +30,7 @@
         "symbol": "BYX",
         "name": "Bayeux",
         "decimals": 18,
-        "logoURI": "ipfs://QmPz92rg7cUt5HrSbqz769Qt3wq5rFFPRoKKPcD2vy6zjw",
+        "logoURI": "ipfs://QmaV6LLDNPfUgf6d8hZrmxC3moPYp5iYJ9u8KKYYnh887C",
         "tags": [
           "erc20"
         ]
@@ -52,7 +52,7 @@
         "symbol": "NDL",
         "name": "Needle",
         "decimals": 18,
-        "logoURI": "ipfs://QmYMsBJf78JN8Zh6zyr8hdT3aDX1MddYxEtk5qTUoBbKfo",
+        "logoURI": "ipfs://QmUzLJUoKN7kHNx6mNYyr8HVuazRV8BapPZH7hHCEkS1QT",
         "tags": [
           "erc20"
         ]
@@ -60,7 +60,7 @@
     ],
     "version": {
       "major": 1,
-      "minor": 1,
+      "minor": 2,
       "patch": 0
     }
   }
