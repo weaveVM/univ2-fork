@@ -53,6 +53,10 @@ const Title = styled.a`
   display: flex;
   align-items: center;
   pointer-events: auto;
+  margin-top: 8px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-top: 16px;
+  `};
 
   :hover {
     cursor: pointer;
@@ -76,6 +80,10 @@ const AccountElement = styled.div<{ active: boolean }>`
   white-space: nowrap;
   width: 100%;
 
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-top: 6px;
+  `};
+
   :focus {
     border: 1px solid blue;
   }
@@ -86,6 +94,10 @@ const TestnetWrapper = styled.div`
   width: fit-content;
   margin-left: 10px;
   pointer-events: auto;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: none;
+  `};
+
 `
 
 const NetworkCard = styled(YellowCard)`
@@ -109,10 +121,7 @@ const HeaderControls = styled.div`
   flex-direction: row;
   align-items: center;
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-direction: column;
-    align-items: flex-end;
-  `};
+
 `
 
 const BalanceText = styled(Text)`
