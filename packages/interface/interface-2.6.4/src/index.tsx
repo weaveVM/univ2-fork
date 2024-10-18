@@ -7,7 +7,7 @@ import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { NetworkContextName } from './constants'
 import './i18n'
-import App from './pages/App'
+// import App from './pages/App'
 import store from './state'
 import ApplicationUpdater from './state/application/updater'
 import ListsUpdater from './state/lists/updater'
@@ -16,6 +16,7 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { FixedGlobalStyle, ThemedGlobalStyle } from './theme'
 import getLibrary from './utils/getLibrary'
+import styled from 'styled-components'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -52,6 +53,20 @@ function Updaters() {
   )
 }
 
+const MaintenanceContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.text1};
+`
+
+const UnderMaintenance = () => {
+  return <MaintenanceContainer>Under Maintenance 🚧</MaintenanceContainer>
+}
+
 ReactDOM.render(
   <StrictMode>
     <FixedGlobalStyle />
@@ -61,7 +76,8 @@ ReactDOM.render(
           <Updaters />
           <ThemeProvider>
             <ThemedGlobalStyle />
-            <App />
+            {/* <App /> */}
+            <UnderMaintenance />
           </ThemeProvider>
         </Provider>
       </Web3ProviderNetwork>
