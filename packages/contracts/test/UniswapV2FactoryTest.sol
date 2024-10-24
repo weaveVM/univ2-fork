@@ -14,10 +14,10 @@ contract UniswapV2FactoryTest is Test {
         IUniswapV2Factory(0xB4CC3075b1B77b5A7AB6154C78E8aC69c4Fd2B2a);
 
     WETH public weth =
-        WETH(payable(0x1a3Dd576467eAb8189796da67e4AE1df8afF6422));
+        WETH(payable(0x28aF5AcBD23B4A1AbD9F68b60427B2C3500021a3));
 
     IUniswapV2Router02 public router =
-        IUniswapV2Router02(0x120040D577Bc571B07A646536f40a7398A886461);
+        IUniswapV2Router02(0xF94bFaC946600d37e19b63D308FEe3527BE0CC10);
 
     ERC20Mintable token0 =
         ERC20Mintable(0x56367cCC752DaAb2194040814343f331941C5C4a);
