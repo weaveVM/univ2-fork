@@ -1,66 +1,66 @@
 {
-    "name": "WeaveVM Tokens",
-    "timestamp": "2024-08-01T00:00:00+00:00",
-    "tokens": [
-      {
-        "chainId": 9496,
-        "address": "0x1a3Dd576467eAb8189796da67e4AE1df8afF6422",
-        "symbol": "wtWVM",
-        "name": "Wrapped tWVM",
-        "decimals": 18,
-        "logoURI": "ipfs://QmZrL43kuLcK14gQo1cVbzwczcVULxN6NKb4EcjYpFpE7w",
-        "tags": [
-          "wrapped"
-        ]
-      },
-      {
-        "chainId": 9496,
-        "address": "0xAFE1eE12B5fEDAa40E359dE53fa090Df7B3Bf56C",
-        "symbol": "THNKPD",
-        "name": "ThinkPad",
-        "decimals": 18,
-        "logoURI": "ipfs://QmTRskgtRmTt8iq6TmdoqNBj4Hiw7VFaCrGhZX1LwQfSG7",
-        "tags": [
-          "erc20"
-        ]
-      },
-      {
-        "chainId": 9496,
-        "address": "0xA562874E80527C484c9b487646cB246BCe1121B6",
-        "symbol": "BYX",
-        "name": "Bayeux",
-        "decimals": 18,
-        "logoURI": "ipfs://QmaV6LLDNPfUgf6d8hZrmxC3moPYp5iYJ9u8KKYYnh887C",
-        "tags": [
-          "erc20"
-        ]
-      },
-      {
-        "chainId": 9496,
-        "address": "0xdbea7D264b2A5cBC44a11c53E29eFc5F40A6f28F",
-        "symbol": "TPSTY",
-        "name": "Tapestry Test Token",
-        "decimals": 18,
-        "logoURI": "ipfs://QmdpueuKtRFLdxPgoio74v3ftfNSsp2ze4pdqkk9anFnCz",
-        "tags": [
-          "erc20"
-        ]
-      },
-      {
-        "chainId": 9496,
-        "address": "0x12E4AEcE1e5665BEC9e73cb03EE4C6a0C3a77D88",
-        "symbol": "NDL",
-        "name": "Needle",
-        "decimals": 18,
-        "logoURI": "ipfs://QmUzLJUoKN7kHNx6mNYyr8HVuazRV8BapPZH7hHCEkS1QT",
-        "tags": [
-          "erc20"
-        ]
-      }
-    ],
-    "version": {
-      "major": 1,
-      "minor": 2,
-      "patch": 0
+  "name": "WeaveVM Tokens",
+  "timestamp": "2024-10-24T00:00:00+00:00",
+  "tokens": [
+    {
+      "chainId": 9496,
+      "address": "0xD0e9aA86e9145D2538b99fDB9F970A9d33A490e5",
+      "symbol": "wtWVM",
+      "name": "Wrapped tWVM",
+      "decimals": 18,
+      "logoURI": "ipfs://QmZrL43kuLcK14gQo1cVbzwczcVULxN6NKb4EcjYpFpE7w",
+      "tags": [
+        "wrapped"
+      ]
+    },
+    {
+      "chainId": 9496,
+      "address": "0x4d4898963262D1c04a6d858f1549DA0644c56657",
+      "symbol": "THNKPD",
+      "name": "ThinkPad",
+      "decimals": 18,
+      "logoURI": "ipfs://QmTRskgtRmTt8iq6TmdoqNBj4Hiw7VFaCrGhZX1LwQfSG7",
+      "tags": [
+        "erc20"
+      ]
+    },
+    {
+      "chainId": 9496,
+      "address": "0xEF374dA020aaf48c1949BeEa999d2939f8e0c4C8",
+      "symbol": "BYX",
+      "name": "Bayeux",
+      "decimals": 18,
+      "logoURI": "ipfs://QmaV6LLDNPfUgf6d8hZrmxC3moPYp5iYJ9u8KKYYnh887C",
+      "tags": [
+        "erc20"
+      ]
+    },
+    {
+      "chainId": 9496,
+      "address": "0xde2183D46B0b66Cd4B200C14C0f9343671Ee294f",
+      "symbol": "TPSTY",
+      "name": "Tapestry Test Token",
+      "decimals": 18,
+      "logoURI": "ipfs://QmdpueuKtRFLdxPgoio74v3ftfNSsp2ze4pdqkk9anFnCz",
+      "tags": [
+        "erc20"
+      ]
+    },
+    {
+      "chainId": 9496,
+      "address": "0xD0e9aA86e9145D2538b99fDB9F970A9d33A490e5",
+      "symbol": "NDL",
+      "name": "Needle",
+      "decimals": 18,
+      "logoURI": "ipfs://QmUzLJUoKN7kHNx6mNYyr8HVuazRV8BapPZH7hHCEkS1QT",
+      "tags": [
+        "erc20"
+      ]
     }
+  ],
+  "version": {
+    "major": 1,
+    "minor": 2,
+    "patch": 0
   }
+}
