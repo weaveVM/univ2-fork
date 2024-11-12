@@ -9,8 +9,8 @@ contract DeployMulticall is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        Multicall3 multicall = new Multicall3();
-        console.log("Multicall3 deployed at:", address(multicall));
+        Multicall multicall = new Multicall();
+        console.log("Multicall deployed at:", address(multicall));
 
         vm.stopBroadcast();
     }
