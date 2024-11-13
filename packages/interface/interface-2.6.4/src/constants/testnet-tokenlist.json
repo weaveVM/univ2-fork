@@ -4,7 +4,7 @@
   "tokens": [
     {
       "chainId": 9496,
-      "address": "0x28aF5AcBD23B4A1AbD9F68b60427B2C3500021a3",
+      "address": "0x5913701c3FFE71467Dfc761d4624c1569d71BEC8",
       "symbol": "wtWVM",
       "name": "Wrapped tWVM",
       "decimals": 18,
@@ -15,7 +15,7 @@
     },
     {
       "chainId": 9496,
-      "address": "0x4d4898963262D1c04a6d858f1549DA0644c56657",
+      "address": "0xAcDA83af93190D329eaa8D0b263CB19E19DEF6A4",
       "symbol": "THNKPD",
       "name": "ThinkPad",
       "decimals": 18,
@@ -26,7 +26,7 @@
     },
     {
       "chainId": 9496,
-      "address": "0xEF374dA020aaf48c1949BeEa999d2939f8e0c4C8",
+      "address": "0xAcDA83af93190D329eaa8D0b263CB19E19DEF6A4",
       "symbol": "BYX",
       "name": "Bayeux",
       "decimals": 18,
@@ -37,7 +37,7 @@
     },
     {
       "chainId": 9496,
-      "address": "0xde2183D46B0b66Cd4B200C14C0f9343671Ee294f",
+      "address": "0xAcDA83af93190D329eaa8D0b263CB19E19DEF6A4",
       "symbol": "TPSTY",
       "name": "Tapestry Test Token",
       "decimals": 18,
@@ -48,7 +48,7 @@
     },
     {
       "chainId": 9496,
-      "address": "0xD0e9aA86e9145D2538b99fDB9F970A9d33A490e5",
+      "address": "0xAcDA83af93190D329eaa8D0b263CB19E19DEF6A4",
       "symbol": "NDL",
       "name": "Needle",
       "decimals": 18,
