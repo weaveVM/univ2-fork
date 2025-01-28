@@ -48,6 +48,17 @@
     },
     {
       "chainId": 9496,
+      "address": "0x671B60B47583fbe72C9677F8c6CDf5F830E81D3d",
+      "symbol": "RELIC",
+      "name": "Relic Token",
+      "decimals": 18,
+      "logoURI": "ipfs://bafkreidd7w7f6qejzsrruz6aoactdsl4kxynddz3pfkg66glr7ajpioa2a",
+      "tags": [
+        "erc20"
+      ]
+    },
+    {
+      "chainId": 9496,
       "address": "0xAcDA83af93190D329eaa8D0b263CB19E19DEF6A4",
       "symbol": "NDL",
       "name": "Needle",
