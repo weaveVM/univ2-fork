@@ -4,7 +4,7 @@
   "tokens": [
     {
       "chainId": 9496,
-      "address": "0x000000000000000000000000000000000000dEaD",
+      "address": "0x9804c94cE6E9789a78f6A2E4565399A20201E6c1",
       "symbol": "wtWVM",
       "name": "Wrapped tWVM",
       "decimals": 18,
@@ -70,8 +70,8 @@
     }
   ],
   "version": {
-    "major": 1,
-    "minor": 5,
+    "major": 2,
+    "minor": 1,
     "patch": 0
   }
 }
