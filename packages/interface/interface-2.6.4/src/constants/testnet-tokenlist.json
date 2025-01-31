@@ -15,6 +15,17 @@
     },
     {
       "chainId": 9496,
+      "address": "0xeE29a92C512C48cA8C38f86f81f372baf6D6fB5B",
+      "symbol": "ETH",
+      "name": "Bridged Holesky ETH",
+      "decimals": 18,
+      "logoURI": "ipfs://bafkreid26dhrj4oqunpcirvrvwg3j7ccjrttlrgkfxwriehy2owwsrljcm",
+      "tags": [
+        "erc20"
+      ]
+    },
+    {
+      "chainId": 9496,
       "address": "0x7290564bEb7b6c450a5124ECc2014307dC7Ba98D",
       "symbol": "THNKPD",
       "name": "ThinkPad",
