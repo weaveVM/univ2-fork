@@ -1,3 +1,16 @@
+factory address:
+0x1E541DC30493106599Cbd184E2196d8e2982C081
+
+weth: 0x5033933DF08046c0ca004AdA826A759fc2322317
+
+router: 0xd9145CCE52D386f254917e481eB44e9943F39138
+
+multicall: 0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8
+
+factory hash: 0x4f5914233a2490d2ce971b1ab7f4174c80f9ce4d18747f4a184e482e6949709a
+
+
+
 # Monorepo Setup Instructions
 
 ## Prerequisites
@@ -103,7 +116,7 @@ This tutorial will be divided into two sections:
 
 1.3 Go to `src/entities/token.ts`. Locate the `WETH` constant and add your own `ChainId` and the address of the WETH smart contract you deployed earlier.
 
-1.4 Go to `src/entities/currency.ts`. In the `public readonly ETHER`, change the symbol (`ETH`) and name (`Ether`) to that of your preferred chain. In our case, it has been changed to `tWVM`.
+1.4 Go to `src/entities/currency.ts`. In the `public readonly ETHER`, change the symbol (`ETH`) and name (`Ether`) to that of your preferred chain. In our case, it has been changed to `tLOAD`.
 
 1.5 Run `yarn build`. Your v2-sdk is ready.
 

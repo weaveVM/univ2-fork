@@ -8,7 +8,7 @@ import {SafeTransferLib} from "../utils/SafeTransferLib.sol";
 /// @notice Minimalist and modern Wrapped Ether implementation.
 /// @author Solmate (https://github.com/transmissions11/solmate/blob/main/src/tokens/WETH.sol)
 /// @author Inspired by WETH9 (https://github.com/dapphub/ds-weth/blob/master/src/weth9.sol)
-contract WETH is ERC20("Wrapped Ether", "WETH", 18) {
+contract WETH is ERC20("Wrapped Testnet LOAD", "wtLOAD", 18) {
     using SafeTransferLib for address;
 
     event Deposit(address indexed from, uint256 amount);

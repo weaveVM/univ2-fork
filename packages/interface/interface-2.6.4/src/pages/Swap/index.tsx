@@ -263,7 +263,7 @@ export default function Swap() {
     // if (inputTokenIsETH && outputTokenIsNotWETHOrETH) {
     // trade = CreateV2SwapTrade(WETH[chainId || 9496].address, v2Trade?.route?.path[1]?.address || "", typedValue) || trade;
     // debugger;
-    // Compare tWVM size vs WtWVM balance
+    // Compare tLOAD size vs wtLOAD balance
     // && WETHBalance?.lessThan(trade?.inputAmount.raw || BigInt(0)
     const inputToken = trade?.route.input
     const outputToken = trade?.route.path[1]

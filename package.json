@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/weaveVM/univ2-fork/issues"
   },
-  "homepage": "https://github.com/weaveVM/univ2-fork#readme"
+  "homepage": "https://github.com/weaveVM/univ2-fork#readme",
+  "dependencies": {
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^4.16.0"
+  }
 }

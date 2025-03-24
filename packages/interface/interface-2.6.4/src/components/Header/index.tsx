@@ -131,7 +131,7 @@ const BalanceText = styled(Text)`
 `
 
 const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
-  [ChainId.WEAVE]: 'WeaveVM',
+  [ChainId.WEAVE]: 'Load Network',
   [ChainId.MAINNET]: null,
   [ChainId.RINKEBY]: 'Rinkeby',
   [ChainId.ROPSTEN]: 'Ropsten',
@@ -168,7 +168,7 @@ export default function Header() {
             <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
               {account && userEthBalance ? (
                 <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                  {userEthBalance?.toSignificant(4)} tWVM
+                  {userEthBalance?.toSignificant(4)} tLOAD
                 </BalanceText>
               ) : null}
               <Web3Status />

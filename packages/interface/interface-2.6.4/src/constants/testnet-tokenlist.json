@@ -1,14 +1,14 @@
 {
-  "name": "WeaveVM Tokens",
-  "timestamp": "2024-10-24T00:00:00+00:00",
+  "name": "Load Network Tokens",
+  "timestamp": "2025-03-24T00:00:00+00:00",
   "tokens": [
     {
       "chainId": 9496,
-      "address": "0x9804c94cE6E9789a78f6A2E4565399A20201E6c1",
-      "symbol": "wtWVM",
-      "name": "Wrapped tWVM",
+      "address": "0x5033933DF08046c0ca004AdA826A759fc2322317",
+      "symbol": "wtLOAD",
+      "name": "Wrapped tLOAD",
       "decimals": 18,
-      "logoURI": "ipfs://QmZrL43kuLcK14gQo1cVbzwczcVULxN6NKb4EcjYpFpE7w",
+      "logoURI": "ipfs://bafkreidgb2du22hxgj23jhyi2gipiovejn75cp6agmrklhxclu63v5pjxu",
       "tags": [
         "wrapped"
       ]
@@ -26,39 +26,6 @@
     },
     {
       "chainId": 9496,
-      "address": "0x7290564bEb7b6c450a5124ECc2014307dC7Ba98D",
-      "symbol": "THNKPD",
-      "name": "ThinkPad",
-      "decimals": 18,
-      "logoURI": "ipfs://QmTRskgtRmTt8iq6TmdoqNBj4Hiw7VFaCrGhZX1LwQfSG7",
-      "tags": [
-        "erc20"
-      ]
-    },
-    {
-      "chainId": 9496,
-      "address": "0xDD6c316eB2680b1FBDA44caDC343148A966A0cA1",
-      "symbol": "BYX",
-      "name": "Bayeux",
-      "decimals": 18,
-      "logoURI": "ipfs://QmaV6LLDNPfUgf6d8hZrmxC3moPYp5iYJ9u8KKYYnh887C",
-      "tags": [
-        "erc20"
-      ]
-    },
-    {
-      "chainId": 9496,
-      "address": "0x4d9634D184e8e2464e9687DCe1DDB45120866e26",
-      "symbol": "TPSTY",
-      "name": "Tapestry Test Token",
-      "decimals": 18,
-      "logoURI": "ipfs://QmdpueuKtRFLdxPgoio74v3ftfNSsp2ze4pdqkk9anFnCz",
-      "tags": [
-        "erc20"
-      ]
-    },
-    {
-      "chainId": 9496,
       "address": "0x671B60B47583fbe72C9677F8c6CDf5F830E81D3d",
       "symbol": "RELIC",
       "name": "Relic Token",
@@ -67,22 +34,11 @@
       "tags": [
         "erc20"
       ]
-    },
-    {
-      "chainId": 9496,
-      "address": "0x5913701c3FFE71467Dfc761d4624c1569d71BEC8",
-      "symbol": "NDL",
-      "name": "Needle",
-      "decimals": 18,
-      "logoURI": "ipfs://QmUzLJUoKN7kHNx6mNYyr8HVuazRV8BapPZH7hHCEkS1QT",
-      "tags": [
-        "erc20"
-      ]
     }
   ],
   "version": {
-    "major": 2,
-    "minor": 2,
+    "major": 3,
+    "minor": 0,
     "patch": 0
   }
 }

@@ -19,9 +19,9 @@
 
 pragma solidity ^0.6.2;
 
-contract WtWVM {
-    string public name     = "Wrapped tWVM";
-    string public symbol   = "WtWVM";
+contract WtLOAD {
+    string public name     = "Wrapped tLOAd";
+    string public symbol   = "wtLOAD";
     uint8  public decimals = 18;
 
     event  Approval(address indexed src, address indexed guy, uint wad);

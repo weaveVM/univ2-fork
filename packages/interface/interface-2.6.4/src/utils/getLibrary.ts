@@ -20,14 +20,14 @@ async function switchNetwork(library: Web3Provider) {
           params: [
             {
               chainId: '0x2518', // 9496 in hexadecimal
-              chainName: 'Testnet WeaveVM',
+              chainName: 'Load Alphanet',
               nativeCurrency: {
-                name: 'Testnet WVM',
-                symbol: 'tWVM', // 2-6 characters long
+                name: 'Testnet LOAD',
+                symbol: 'tLOAD', // 2-6 characters long
                 decimals: 18,
               },
-              rpcUrls: ['https://testnet-rpc.wvm.dev'],
-              blockExplorerUrls: ['https://explorer.wvm.dev'],
+              rpcUrls: ['https://alphanet.load.network'],
+              blockExplorerUrls: ['https://explorer.load.network'],
             },
           ],
         });
