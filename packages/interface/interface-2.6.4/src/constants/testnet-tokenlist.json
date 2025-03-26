@@ -4,7 +4,7 @@
   "tokens": [
     {
       "chainId": 9496,
-      "address": "0x5033933DF08046c0ca004AdA826A759fc2322317",
+      "address": "0x9116cF7Dbc1C520DC264FE39c4c361537893e47F",
       "symbol": "wtLOAD",
       "name": "Wrapped tLOAD",
       "decimals": 18,
@@ -15,7 +15,7 @@
     },
     {
       "chainId": 9496,
-      "address": "0xeE29a92C512C48cA8C38f86f81f372baf6D6fB5B",
+      "address": "0xc8b5b070FaD68CBbd9Fa0064fDc892c54C2Ec90d",
       "symbol": "ETH",
       "name": "Bridged Holesky ETH",
       "decimals": 18,
@@ -34,10 +34,32 @@
       "tags": [
         "erc20"
       ]
+    },
+    {
+      "chainId": 9496,
+      "address": "0xDaF38bbC39c0Cad3C44C3709209Cf52C5bA4eA53",
+      "symbol": "SLOT",
+      "name": "SLOT",
+      "decimals": 18,
+      "logoURI": "ipfs://bafkreib374rjvcrffxbjfxym5vca24wxqp6yjcarqj7t3ervfr726idx7u",
+      "tags": [
+        "erc20"
+      ]
+    },
+    {
+      "chainId": 9496,
+      "address": "0xB4BDc424bA54A5B11D3E5893E826bbfBEbd6b7d2",
+      "symbol": "MEDIA",
+      "name": "MEDIA",
+      "decimals": 18,
+      "logoURI": "ipfs://bafkreihrc5q6livfw4le26rb4tx4gvbjvyi5cqlfdqobufwfiqppiyc6si",
+      "tags": [
+        "erc20"
+      ]
     }
   ],
   "version": {
-    "major": 3,
+    "major": 4,
     "minor": 0,
     "patch": 0
   }

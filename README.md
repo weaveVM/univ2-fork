@@ -1,13 +1,13 @@
 factory address:
-0x1E541DC30493106599Cbd184E2196d8e2982C081
+0xDF8f291928223BFE248a3e4E68ACf7E879396A8a
 
-weth: 0x5033933DF08046c0ca004AdA826A759fc2322317
+weth: 0x9116cF7Dbc1C520DC264FE39c4c361537893e47F
 
-router: 0xd9145CCE52D386f254917e481eB44e9943F39138
+router: 0xa2Eb4FC1EE404447aCE9463530c9611487A73D40
 
-multicall: 0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8
+multicall: 0x271e851188dB8d3F052762ad4ae359a3E6B0D63c
 
-factory hash: 0x4f5914233a2490d2ce971b1ab7f4174c80f9ce4d18747f4a184e482e6949709a
+factory hash: 0xdec050bc4d071661fb1e701a8e2fb08cd861e7f988740ca8a794b87c1831b8ea
 
 
 
@@ -139,4 +139,3 @@ This tutorial will be divided into two sections:
 2.8 Go to `/src/utils/index.ts`. In the `ETHERSCAN_PREFIXES` constant, add `9496: ‘weave’` to the list of key-value pairs.
 
 2.9 Run `yarn start` for your frontend to compile and open in a browser.
-

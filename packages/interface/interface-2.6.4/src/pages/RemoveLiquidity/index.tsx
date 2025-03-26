@@ -1,6 +1,5 @@
-import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
-import { TransactionResponse } from '@ethersproject/providers'
+//import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, currencyEquals, ETHER, Percent, WETH } from '@uniswap/sdk'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ArrowDown, Plus } from 'react-feather'
@@ -27,7 +26,7 @@ import { usePairContract } from '../../hooks/useContract'
 
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { StyledInternalLink, TYPE } from '../../theme'
-import { calculateGasMargin, calculateSlippageAmount, getRouterContract } from '../../utils'
+import { calculateSlippageAmount, getRouterContract } from '../../utils'
 import { currencyId } from '../../utils/currencyId'
 import useDebouncedChangeHandler from '../../utils/useDebouncedChangeHandler'
 import { wrappedCurrency } from '../../utils/wrappedCurrency'
@@ -81,8 +80,8 @@ export default function RemoveLiquidity({
     [Field.LIQUIDITY_PERCENT]: parsedAmounts[Field.LIQUIDITY_PERCENT].equalTo('0')
       ? '0'
       : parsedAmounts[Field.LIQUIDITY_PERCENT].lessThan(new Percent('1', '100'))
-      ? '<1'
-      : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
+        ? '<1'
+        : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
     [Field.LIQUIDITY]:
       independentField === Field.LIQUIDITY ? typedValue : parsedAmounts[Field.LIQUIDITY]?.toSignificant(6) ?? '',
     [Field.CURRENCY_A]:
@@ -103,67 +102,14 @@ export default function RemoveLiquidity({
     if (!pairContract || !pair || !library) throw new Error('missing dependencies')
     const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
     if (!liquidityAmount) throw new Error('missing liquidity amount')
-    // try to gather a signature for permission
-    const nonce = await pairContract.nonces(account)
 
-    const deadlineForSignature: number = Math.ceil(Date.now() / 1000) + deadline
+    // Use direct approve method instead of permit
+    console.log('Using direct approve transaction instead of permit')
 
-    const EIP712Domain = [
-      { name: 'name', type: 'string' },
-      { name: 'version', type: 'string' },
-      { name: 'chainId', type: 'uint256' },
-      { name: 'verifyingContract', type: 'address' }
-    ]
-    const domain = {
-      name: 'MVM LP V2',
-      version: '1',
-      chainId: chainId,
-      verifyingContract: pair.liquidityToken.address
-    }
-    const Permit = [
-      { name: 'owner', type: 'address' },
-      { name: 'spender', type: 'address' },
-      { name: 'value', type: 'uint256' },
-      { name: 'nonce', type: 'uint256' },
-      { name: 'deadline', type: 'uint256' }
-    ]
-    const message = {
-      owner: account,
-      spender: ROUTER_ADDRESS,
-      value: liquidityAmount.raw.toString(),
-      nonce: nonce.toHexString(),
-      deadline: deadlineForSignature
-    }
-    const data = JSON.stringify({
-      types: {
-        EIP712Domain,
-        Permit
-      },
-      domain,
-      primaryType: 'Permit',
-      message
-    })
-
-    library
-      .send('eth_signTypedData_v4', [account, data])
-      .then(splitSignature)
-      .then(signature => {
-        setSignatureData({
-          v: signature.v,
-          r: signature.r,
-          s: signature.s,
-          deadline: deadlineForSignature
-        })
-      })
-      .catch(error => {
-        // for all errors other than 4001 (EIP-1193 user rejected request), fall back to manual approve
-        if (error?.code !== 4001) {
-          approveCallback()
-        }
-      })
+    // Call approveCallback which triggers the actual approval transaction
+    approveCallback()
   }
 
-  // wrapped onUserInput to clear signatures
   const onUserInput = useCallback(
     (field: Field, typedValue: string) => {
       setSignatureData(null)
@@ -184,6 +130,8 @@ export default function RemoveLiquidity({
 
   // tx sending
   const addTransaction = useTransactionAdder()
+  // Replace the entire onRemove function with this version
+  // Replace the onRemove function with this version that uses compatible gas price method
   async function onRemove() {
     if (!chainId || !library || !account) throw new Error('missing dependencies')
     const { [Field.CURRENCY_A]: currencyAmountA, [Field.CURRENCY_B]: currencyAmountB } = parsedAmounts
@@ -191,28 +139,56 @@ export default function RemoveLiquidity({
       throw new Error('missing currency amounts')
     }
     const router = getRouterContract(chainId, library, account)
-
+  
     const amountsMin = {
       [Field.CURRENCY_A]: calculateSlippageAmount(currencyAmountA, allowedSlippage)[0],
       [Field.CURRENCY_B]: calculateSlippageAmount(currencyAmountB, allowedSlippage)[0]
     }
-
+  
     if (!currencyA || !currencyB) throw new Error('missing tokens')
+    
+    // Add null check for tokenA and tokenB
+    if (!tokenA || !tokenB) throw new Error('could not wrap tokens')
+    
     const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
     if (!liquidityAmount) throw new Error('missing liquidity amount')
-
+  
     const currencyBIsETH = currencyB === ETHER
     const oneCurrencyIsETH = currencyA === ETHER || currencyBIsETH
-    const deadlineFromNow = Math.ceil(Date.now() / 1000) + deadline
-
-    if (!tokenA || !tokenB) throw new Error('could not wrap')
-
-    let methodNames: string[], args: Array<string | string[] | number | boolean>
-    // we have approval, use normal remove liquidity
+  
+    let methodName: string, args: Array<any>
+    
+    // Define txOptions with proper type
+    const txOptions: {
+      nonce?: number;
+      gasLimit?: BigNumber;
+      gasPrice?: BigNumber;
+    } = {}
+  
+    // Get current nonce for better transaction reliability
+    const nonce = await library.getTransactionCount(account, "pending")
+    txOptions.nonce = nonce
+    
+    // Use a generous gas limit to ensure the transaction succeeds
+    txOptions.gasLimit = BigNumber.from(1000000) // 1 million gas
+    
+    try {
+      // Try to get current gas price and increase it by 50%
+      const gasPrice = await library.getGasPrice()
+      if (gasPrice) {
+        txOptions.gasPrice = gasPrice.mul(150).div(100)
+      }
+    } catch (error) {
+      console.log('Could not get gas price, using default')
+    }
+  
+    // ALWAYS use standard methods, never permit methods
     if (approval === ApprovalState.APPROVED) {
-      // removeLiquidityETH
+      console.log('Using standard removal functions with approval')
+      const deadlineFromNow = Math.ceil(Date.now() / 1000) + deadline
+      
       if (oneCurrencyIsETH) {
-        methodNames = ['removeLiquidityETH', 'removeLiquidityETHSupportingFeeOnTransferTokens']
+        methodName = 'removeLiquidityETH'
         args = [
           currencyBIsETH ? tokenA.address : tokenB.address,
           liquidityAmount.raw.toString(),
@@ -221,10 +197,8 @@ export default function RemoveLiquidity({
           account,
           deadlineFromNow
         ]
-      }
-      // removeLiquidity
-      else {
-        methodNames = ['removeLiquidity']
+      } else {
+        methodName = 'removeLiquidity'
         args = [
           tokenA.address,
           tokenB.address,
@@ -235,75 +209,87 @@ export default function RemoveLiquidity({
           deadlineFromNow
         ]
       }
-    }
-    // we have a signataure, use permit versions of remove liquidity
-    else if (signatureData !== null) {
-      // removeLiquidityETHWithPermit
-      if (oneCurrencyIsETH) {
-        methodNames = ['removeLiquidityETHWithPermit', 'removeLiquidityETHWithPermitSupportingFeeOnTransferTokens']
-        args = [
-          currencyBIsETH ? tokenA.address : tokenB.address,
-          liquidityAmount.raw.toString(),
-          amountsMin[currencyBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
-          amountsMin[currencyBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s
-        ]
-      }
-      // removeLiquidityETHWithPermit
-      else {
-        methodNames = ['removeLiquidityWithPermit']
-        args = [
-          tokenA.address,
-          tokenB.address,
-          liquidityAmount.raw.toString(),
-          amountsMin[Field.CURRENCY_A].toString(),
-          amountsMin[Field.CURRENCY_B].toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s
-        ]
-      }
     } else {
-      throw new Error('Attempting to confirm without approval or a signature. Please contact support.')
+      console.error('Please complete the approval process first')
+      setAttemptingTxn(false)
+      return
     }
-
-    const safeGasEstimates: (BigNumber | undefined)[] = await Promise.all(
-      methodNames.map(methodName =>
-        router.estimateGas[methodName](...args)
-          .then(calculateGasMargin)
-          .catch(error => {
-            console.error(`estimateGas failed`, methodName, args, error)
-            return undefined
-          })
-      )
-    )
-
-    const indexOfSuccessfulEstimation = safeGasEstimates.findIndex(safeGasEstimate =>
-      BigNumber.isBigNumber(safeGasEstimate)
-    )
-
-    // all estimations failed...
-    if (indexOfSuccessfulEstimation === -1) {
-      console.error('This transaction would fail. Please contact support.')
-    } else {
-      const methodName = methodNames[indexOfSuccessfulEstimation]
-      const safeGasEstimate = safeGasEstimates[indexOfSuccessfulEstimation]
-
-      setAttemptingTxn(true)
-      await router[methodName](...args, {
-        gasLimit: safeGasEstimate
+    
+    console.log('Transaction details:')
+    console.log('- Method:', methodName)
+    console.log('- Args:', args)
+    console.log('- Options:', txOptions)
+    
+    setAttemptingTxn(true)
+    
+    try {
+      const response = await router[methodName](...args, txOptions)
+      console.log('Transaction sent:', response.hash)
+      
+      // Wait for confirmation (1 block)
+      const receipt = await response.wait(1)
+      console.log('Transaction confirmed in block:', receipt.blockNumber)
+      
+      setAttemptingTxn(false)
+      addTransaction(response, {
+        summary:
+          'Remove ' +
+          parsedAmounts[Field.CURRENCY_A]?.toSignificant(3) +
+          ' ' +
+          currencyA?.symbol +
+          ' and ' +
+          parsedAmounts[Field.CURRENCY_B]?.toSignificant(3) +
+          ' ' +
+          currencyB?.symbol
       })
-        .then((response: TransactionResponse) => {
+      setTxHash(response.hash)
+      
+      ReactGA.event({
+        category: 'Liquidity',
+        action: 'Remove',
+        label: [currencyA?.symbol, currencyB?.symbol].join('/')
+      })
+    } catch (error) {
+      console.error('Transaction failed:', error)
+      setAttemptingTxn(false)
+      
+      // Try backup method for tokens with transfer fees
+      try {
+        if (oneCurrencyIsETH && approval === ApprovalState.APPROVED) {
+          console.log('Trying standard backup method with fee support')
+          const backupMethodName = 'removeLiquidityETHSupportingFeeOnTransferTokens'
+          const deadlineFromNow = Math.ceil(Date.now() / 1000) + deadline
+          const backupTxOptions = {
+            ...txOptions,
+            gasLimit: BigNumber.from(1500000) // Higher gas limit for backup
+          }
+          
+          try {
+            // Try to get higher gas price for backup
+            const gasPrice = await library.getGasPrice()
+            if (gasPrice) {
+              backupTxOptions.gasPrice = gasPrice.mul(200).div(100) // Double gas price
+            }
+          } catch (e) {
+            console.log('Could not get gas price for backup')
+          }
+          
+          setAttemptingTxn(true)
+          const response = await router[backupMethodName](
+            currencyBIsETH ? tokenA.address : tokenB.address,
+            liquidityAmount.raw.toString(),
+            amountsMin[currencyBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
+            amountsMin[currencyBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
+            account,
+            deadlineFromNow,
+            backupTxOptions
+          )
+          
+          console.log('Backup transaction sent:', response.hash)
+          const receipt = await response.wait(1)
+          console.log('Backup transaction confirmed in block:', receipt.blockNumber)
+          
           setAttemptingTxn(false)
-
           addTransaction(response, {
             summary:
               'Remove ' +
@@ -315,20 +301,14 @@ export default function RemoveLiquidity({
               ' ' +
               currencyB?.symbol
           })
-
           setTxHash(response.hash)
-
-          ReactGA.event({
-            category: 'Liquidity',
-            action: 'Remove',
-            label: [currencyA?.symbol, currencyB?.symbol].join('/')
-          })
-        })
-        .catch((error: Error) => {
-          setAttemptingTxn(false)
-          // we only care if the error is something _other_ than the user rejected the tx
-          console.error(error)
-        })
+        } else {
+          console.log('No backup method available')
+        }
+      } catch (backupError) {
+        console.error('Backup method also failed:', backupError)
+        setAttemptingTxn(false)
+      }
     }
   }
 
@@ -410,9 +390,8 @@ export default function RemoveLiquidity({
     )
   }
 
-  const pendingText = `Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
-    currencyA?.symbol
-  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${currencyB?.symbol}`
+  const pendingText = `Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${currencyA?.symbol
+    } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${currencyB?.symbol}`
 
   const liquidityPercentChangeCallback = useCallback(
     (value: number) => {
@@ -424,8 +403,8 @@ export default function RemoveLiquidity({
   const oneCurrencyIsETH = currencyA === ETHER || currencyB === ETHER
   const oneCurrencyIsWETH = Boolean(
     chainId &&
-      ((currencyA && currencyEquals(WETH[chainId], currencyA)) ||
-        (currencyB && currencyEquals(WETH[chainId], currencyB)))
+    ((currencyA && currencyEquals(WETH[chainId], currencyA)) ||
+      (currencyB && currencyEquals(WETH[chainId], currencyB)))
   )
 
   const handleSelectCurrencyA = useCallback(
@@ -557,17 +536,15 @@ export default function RemoveLiquidity({
                       <RowBetween style={{ justifyContent: 'flex-end' }}>
                         {oneCurrencyIsETH ? (
                           <StyledInternalLink
-                            to={`/remove/${currencyA === ETHER ? WETH[chainId].address : currencyIdA}/${
-                              currencyB === ETHER ? WETH[chainId].address : currencyIdB
-                            }`}
+                            to={`/remove/${currencyA === ETHER ? WETH[chainId].address : currencyIdA}/${currencyB === ETHER ? WETH[chainId].address : currencyIdB
+                              }`}
                           >
                             Receive {WETH[chainId].symbol} (Wrapped tLOAD)
                           </StyledInternalLink>
                         ) : oneCurrencyIsWETH ? (
                           <StyledInternalLink
-                            to={`/remove/${
-                              currencyA && currencyEquals(currencyA, WETH[chainId]) ? 'ETH' : currencyIdA
-                            }/${currencyB && currencyEquals(currencyB, WETH[chainId]) ? 'ETH' : currencyIdB}`}
+                            to={`/remove/${currencyA && currencyEquals(currencyA, WETH[chainId]) ? 'ETH' : currencyIdA
+                              }/${currencyB && currencyEquals(currencyB, WETH[chainId]) ? 'ETH' : currencyIdB}`}
                           >
                             Receive tLOAD
                           </StyledInternalLink>
